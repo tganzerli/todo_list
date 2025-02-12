@@ -4,6 +4,29 @@ import 'package:flutter/foundation.dart';
 /// Extend this class to define specific states for your ViewModel.
 abstract class ViewState {}
 
+/// A placeholder state for ViewModels that do not require reactive state management.
+///
+/// This class implements `ViewState` but does not hold any state data.
+/// It is useful when a `ViewModel` does not need to manage a reactive state but
+/// still requires a valid `ViewState` type.
+///
+/// ### When to Use:
+/// - When a `ViewModel` does not need to track UI state changes.
+/// - For ViewModels that only perform actions without holding state.
+/// - To comply with the `ViewModel<T extends ViewState>` structure while avoiding unnecessary state definitions.
+///
+/// ### Example Usage:
+/// ```dart
+/// class MyViewModel extends ViewModel<UnitViewState> {
+///   MyViewModel() : super(UnitViewState());
+///
+///   void performAction() {
+///     print("Action executed!");
+///   }
+/// }
+/// ```
+class UnitViewState implements ViewState {}
+
 /// A generic base class for managing UI state in a Flutter application.
 ///
 /// This class extends `ValueListenable<T>`, making it compatible with
