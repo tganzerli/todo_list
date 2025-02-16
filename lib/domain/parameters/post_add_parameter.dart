@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:todo_list/core/core.dart';
 import 'package:todo_list/domain/enums/posts_status_enum.dart';
 
-class PostsParameter extends Parameters {
+class PostAddParameter extends Parameters {
   final String title;
   final String body;
   final PostsStatusEnum status;
   final int? userId;
-  PostsParameter({
+  PostAddParameter({
     required this.title,
     required this.body,
     required this.status,
@@ -16,7 +16,7 @@ class PostsParameter extends Parameters {
   });
 
   @override
-  Output<PostsParameter> validate() {
+  Output<PostAddParameter> validate() {
     if (userId != null && userId! <= 0) {
       return failure(ValidationException(message: 'Id do usuario invalido'));
     }
@@ -45,8 +45,8 @@ class PostsParameter extends Parameters {
     };
   }
 
-  factory PostsParameter.fromMap(Map<String, dynamic> map) {
-    return PostsParameter(
+  factory PostAddParameter.fromMap(Map<String, dynamic> map) {
+    return PostAddParameter(
       title: map['title'] ?? '',
       body: map['body'] ?? '',
       status: PostsStatusEnum.fromMap(map['status']),
@@ -56,6 +56,6 @@ class PostsParameter extends Parameters {
 
   String toJson() => json.encode(toMap());
 
-  factory PostsParameter.fromJson(String source) =>
-      PostsParameter.fromMap(json.decode(source));
+  factory PostAddParameter.fromJson(String source) =>
+      PostAddParameter.fromMap(json.decode(source));
 }
