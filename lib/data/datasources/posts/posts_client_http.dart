@@ -16,11 +16,11 @@ class PostsClientHttp {
         method: RestMethod.get,
       ));
       final data = baseResponse.data;
-      if (data is! List<Map<String, dynamic>>) {
+      if (data is! List<dynamic>) {
         return failure(
             FormatedException(message: 'Return with different formatting'));
       } else {
-        return success(data);
+        return success(data.cast<Map<String, dynamic>>());
       }
     } on BaseException catch (exception) {
       return failure(exception);
