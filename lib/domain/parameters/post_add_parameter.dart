@@ -1,16 +1,21 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+
 import 'package:todo_list/core/core.dart';
 import 'package:todo_list/domain/enums/posts_status_enum.dart';
 
 class PostAddParameter extends Parameters {
   final String title;
   final String body;
+  final DateTime date;
   final PostsStatusEnum status;
   final int? userId;
   PostAddParameter({
     required this.title,
     required this.body,
+    required this.date,
     required this.status,
     this.userId,
   });
@@ -36,10 +41,27 @@ class PostAddParameter extends Parameters {
     return success(this);
   }
 
+  PostAddParameter copyWith({
+    String? title,
+    String? body,
+    DateTime? date,
+    PostsStatusEnum? status,
+    ValueGetter<int?>? userId,
+  }) {
+    return PostAddParameter(
+      title: title ?? this.title,
+      body: body ?? this.body,
+      date: date ?? this.date,
+      status: status ?? this.status,
+      userId: userId != null ? userId() : this.userId,
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'title': title,
       'body': body,
+      'date': date.millisecondsSinceEpoch,
       'status': status.toMap(),
       'userId': userId,
     };
@@ -49,6 +71,7 @@ class PostAddParameter extends Parameters {
     return PostAddParameter(
       title: map['title'] ?? '',
       body: map['body'] ?? '',
+      date: DateTime.fromMillisecondsSinceEpoch(map['date']),
       status: PostsStatusEnum.fromMap(map['status']),
       userId: map['userId']?.toInt(),
     );

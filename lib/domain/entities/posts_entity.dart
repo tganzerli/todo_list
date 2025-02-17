@@ -8,12 +8,14 @@ import 'user_entity.dart';
 class PostsEntity extends Entity<int> {
   final String title;
   final String body;
+  final DateTime date;
   final PostsStatusEnum status;
   final UserEntity user;
   PostsEntity({
     required super.id,
     required this.title,
     required this.body,
+    required this.date,
     required this.status,
     required this.user,
   });
@@ -42,11 +44,16 @@ class PostsEntity extends Entity<int> {
     return success(this);
   }
 
+  // <== To mock in cache ==>
+  PostsEntity changeId(int id) => PostsEntity(
+      id: id, title: title, body: body, date: date, status: status, user: user);
+
   Map<String, dynamic> toMap() {
     return {
       'id': super.id,
       'title': title,
       'body': body,
+      'date': date.millisecondsSinceEpoch,
       'status': status.toMap(),
       'user': user.toMap(),
     };
@@ -57,6 +64,7 @@ class PostsEntity extends Entity<int> {
       id: map['id'] ?? 0,
       title: map['title'] ?? '',
       body: map['body'] ?? '',
+      date: DateTime.fromMillisecondsSinceEpoch(map['date']),
       status: PostsStatusEnum.fromMap(map['status']),
       user: UserEntity.fromMap(map['user']),
     );

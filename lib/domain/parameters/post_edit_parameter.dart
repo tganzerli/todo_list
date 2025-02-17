@@ -7,11 +7,13 @@ class PostEditParameter extends Parameters {
   final int id;
   final String? title;
   final String? body;
+  final DateTime? date;
   final PostsStatusEnum? status;
   PostEditParameter({
     required this.id,
     this.title,
     this.body,
+    required this.date,
     this.status,
   });
 
@@ -20,7 +22,7 @@ class PostEditParameter extends Parameters {
     if (id <= 0) {
       return failure(ValidationException(message: 'Id invalido'));
     }
-    if (title == null && body == null && status == null) {
+    if (title == null && body == null && status == null && date == null) {
       return failure(
           ValidationException(message: 'Post sem variavel para ser editada'));
     }
@@ -45,6 +47,7 @@ class PostEditParameter extends Parameters {
       'id': id,
       'title': title,
       'body': body,
+      'date': date?.millisecondsSinceEpoch,
       'status': status?.toMap(),
     };
   }
@@ -54,6 +57,9 @@ class PostEditParameter extends Parameters {
       id: map['id']?.toInt() ?? 0,
       title: map['title'],
       body: map['body'],
+      date: map['date'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['date'])
+          : null,
       status:
           map['status'] != null ? PostsStatusEnum.fromMap(map['status']) : null,
     );
