@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list/core/config/injector.dart';
-import 'package:todo_list/core/core.dart';
+import 'package:todo_list/ui/start_viewmodel.dart';
 
 class StartConfig extends StatefulWidget {
   final Widget? child;
@@ -16,14 +16,20 @@ class StartConfig extends StatefulWidget {
 }
 
 class _StartConfigState extends State<StartConfig> {
-  final client = injector.get<RestClient>();
+  final StartViewModel viewModel = injector.get<StartViewModel>();
 
-  Future<void> addInterceptors() async {}
+  void listener() {
+    if (viewModel.authEvent.isSuccess) {
+      Navigator.popAndPushNamed(context, '/home',
+          arguments: viewModel.userLogged);
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    addInterceptors();
+    viewModel.authEvent.execute();
+    viewModel.authEvent.addListener(listener);
   }
 
   @override
