@@ -16,5 +16,5 @@ void dataInjector() {
   injector.add<UsersClientMock>(UsersClientMock.new);
 
   injector.add<AuthRepository>(RemoteAuthRepository.new);
-  injector.add<PostsRepository>(RemotePostsRepository.new);
+  injector.addSingleton<PostsRepository>(RemotePostsRepository.new);
 }
