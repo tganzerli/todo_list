@@ -1,5 +1,7 @@
+import 'dart:async';
+
 import 'package:todo_list/core/output/async_output.dart';
-import 'package:todo_list/data/datasources/adapters/posts/posts_adapter.dart';
+import 'package:todo_list/data/adapters/posts/posts_adapter.dart';
 import 'package:todo_list/data/datasources/posts/posts_cache.dart';
 import 'package:todo_list/data/datasources/posts/posts_client_http.dart';
 import 'package:todo_list/data/datasources/users/user_logged_cache.dart';
@@ -21,6 +23,9 @@ class RemotePostsRepository implements PostsRepository {
     required this.userLoggedCache,
     required this.usersClientMock,
   });
+
+  final _streamController = StreamController<List<PostsEntity>>.broadcast();
+
   @override
   AsyncOutput<PostsEntity> addPost(PostAddParameter param) async {
     return userLoggedCache //
@@ -33,7 +38,14 @@ class RemotePostsRepository implements PostsRepository {
                 .flatMap((data) => PostsAdapter //
                     .addPostData(
                         data: data, param: paramValid, user: user)))) //
-        .flatMap((post) => postsCache.savePost(post));
+        .flatMap((post) => postsCache.savePost(post))
+        .onSuccess(
+      (_) {
+        postsCache
+            .getPosts() //
+            .onSuccess((posts) => _streamController.add(posts));
+      },
+    );
   }
 
   @override
@@ -41,12 +53,19 @@ class RemotePostsRepository implements PostsRepository {
     return param //
         .validate() //
         .asyncBind((paramValid) => postsClientHttp //
-            .editPosts(paramValid.toMap()) //
-            .flatMap((_) => postsCache //
-                .getPost(paramValid.id) //
-                .flatMap((oldPost) => PostsAdapter //
-                    .editPostData(oldPost: oldPost, param: param)))) //
-        .flatMap((post) => postsCache.editPost(post));
+                .editPosts(paramValid.toMap()) //
+                .flatMap((_) => postsCache //
+                    .getPost(paramValid.id) //
+                    .flatMap((oldPost) => PostsAdapter //
+                        .editPostData(oldPost: oldPost, param: param))) //
+                .flatMap((post) => postsCache.editPost(post)) //
+                .onSuccess(
+              (_) {
+                postsCache
+                    .getPosts() //
+                    .onSuccess((posts) => _streamController.add(posts));
+              },
+            ));
   }
 
   @override
@@ -57,6 +76,17 @@ class RemotePostsRepository implements PostsRepository {
             .getUser() //
             .flatMap((users) =>
                 PostsAdapter.getPostsData(data: httpData, users: users))) //
-        .flatMap((posts) => postsCache.savePosts(posts));
+        .flatMap((posts) => postsCache.savePosts(posts)) //
+        .onSuccess((posts) => _streamController.add(posts));
+  }
+
+  @override
+  Stream<List<PostsEntity>> postsObserver() {
+    return _streamController.stream;
+  }
+
+  @override
+  void dispose() {
+    _streamController.close();
   }
 }

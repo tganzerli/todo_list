@@ -7,4 +7,7 @@ abstract interface class PostsRepository {
   AsyncOutput<List<PostsEntity>> getPosts();
   AsyncOutput<PostsEntity> addPost(PostAddParameter param);
   AsyncOutput<PostsEntity> editPost(PostEditParameter param);
+  Stream<List<PostsEntity>> postsObserver();
+
+  void dispose();
 }
