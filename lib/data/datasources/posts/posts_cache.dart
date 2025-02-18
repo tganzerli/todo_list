@@ -12,8 +12,7 @@ class PostsCache {
 
   AsyncOutput<List<PostsEntity>> getPosts() async {
     try {
-      final List<Map<String, dynamic>> response =
-          await cache.getData(_postsKey);
+      final List response = await cache.getData(_postsKey);
 
       return success(
           response.map((postMap) => PostsEntity.fromMap(postMap)).toList());
