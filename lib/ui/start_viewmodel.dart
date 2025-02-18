@@ -6,9 +6,11 @@ class StartViewModel extends ViewModel<UnitViewState> {
   final AuthRepository authRepository;
 
   late final Command0<Unit> authEvent;
+  late final Command1<String, String> routeEvent;
 
   StartViewModel({required this.authRepository}) : super(UnitViewState()) {
     authEvent = Command0(_authEvent);
+    routeEvent = Command1(_routeEvent);
   }
 
   late UserLoggedEntity _userLogged;
@@ -31,5 +33,10 @@ class StartViewModel extends ViewModel<UnitViewState> {
         return success(unit);
       },
     );
+  }
+
+  AsyncOutput<String> _routeEvent(String route) async {
+    print('route: $route');
+    return success(route);
   }
 }

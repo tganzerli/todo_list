@@ -1,29 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list/domain/entities/user_logged_entity.dart';
+import 'package:todo_list/core/config/injector.dart';
 import 'package:todo_list/layout/layout.dart';
+import 'package:todo_list/ui/start_viewmodel.dart';
 
+import 'pages/add_post/add_post_page.dart';
+import 'pages/calendar/calendar_page.dart';
 import 'pages/home/home_page.dart';
 import 'pages/splash/splash_page.dart';
 import 'start_config_prod.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class AppWidget extends StatelessWidget {
   const AppWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final StartViewModel viewModel = injector.get<StartViewModel>();
     return MaterialApp(
+      navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: lightTheme(context),
       builder: StartConfig.instance,
       onGenerateRoute: (settings) {
+        viewModel.routeEvent.execute(settings.name ?? '');
         final args = settings.arguments;
         switch (settings.name) {
           case '/home':
-            return _customPageRoute(
-                HomePage(
-                  userLoggedEntity: args! as UserLoggedEntity,
-                ),
+            return _customPageRoute(const HomePage(), transitionType: 'fade');
+          case '/calendar':
+            return _customPageRoute(const CalendarPage(),
                 transitionType: 'fade');
+          case '/addPost':
+            return _customPageRoute(const AddPostPage());
           default:
             return _customPageRoute(const SplashPage(), transitionType: 'fade');
         }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list/core/config/injector.dart';
+import 'package:todo_list/ui/app_routes.dart';
 import 'package:todo_list/ui/start_viewmodel.dart';
+
+import 'app_widget.dart';
 
 class StartConfig extends StatefulWidget {
   final Widget? child;
@@ -20,8 +23,9 @@ class _StartConfigState extends State<StartConfig> {
 
   void listener() {
     if (viewModel.authEvent.isSuccess) {
-      Navigator.popAndPushNamed(context, '/home',
-          arguments: viewModel.userLogged);
+      Future.microtask(() {
+        navigatorKey.currentState?.popAndPushNamed(AppRoutes.home);
+      });
     }
   }
 
