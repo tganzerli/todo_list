@@ -74,18 +74,17 @@ class PostsAdapter {
         return PostsStatusEnum.todo;
       }
 
-      final date = DateTime.now().add(Duration(days: dayGenerator()));
-
-      return success(data
-          .map((postMap) => PostsEntity(
-                id: postMap['id'],
-                title: postMap['title'],
-                body: postMap['body'],
-                date: date,
-                status: statusGenerator(date),
-                user: users.where((user) => user.id == postMap['userId']).first,
-              ))
-          .toList());
+      return success(data.map((postMap) {
+        final date = DateTime.now().add(Duration(days: dayGenerator()));
+        return PostsEntity(
+          id: postMap['id'],
+          title: postMap['title'],
+          body: postMap['body'],
+          date: date,
+          status: statusGenerator(date),
+          user: users.where((user) => user.id == postMap['userId']).first,
+        );
+      }).toList());
     } on BaseException catch (e) {
       return failure(e);
     } catch (e) {
