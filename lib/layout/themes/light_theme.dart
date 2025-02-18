@@ -22,6 +22,10 @@ ThemeData lightTheme(BuildContext context) {
       iconTheme: IconThemeData(color: AppColorsConstant.textPrimary),
     ),
     textTheme: TextTheme(
+      displayMedium: TextStyle(
+          fontSize: 24,
+          color: AppColorsConstant.primary,
+          fontWeight: FontWeight.w400),
       titleLarge: TextStyle(
           fontSize: 20,
           color: AppColorsConstant.textPrimary,
@@ -34,6 +38,10 @@ ThemeData lightTheme(BuildContext context) {
           fontSize: 11,
           color: AppColorsConstant.textSecondary,
           fontWeight: FontWeight.w400),
+      labelLarge: TextStyle(
+          fontSize: 15,
+          color: AppColorsConstant.textPrimary,
+          fontWeight: FontWeight.w600),
       labelMedium: TextStyle(
           fontSize: 11,
           color: AppColorsConstant.textPrimary,
@@ -55,7 +63,7 @@ ThemeData lightTheme(BuildContext context) {
       shadowColor: AppColorsConstant.borderColor.withValues(alpha: 0.5),
       elevation: 0.1,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppSpacing().spacingXS),
+        borderRadius: BorderRadius.circular(AppSpacing().spacingSM),
       ),
     ),
     chipTheme: ChipThemeData(
