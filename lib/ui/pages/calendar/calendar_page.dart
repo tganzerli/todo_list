@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list/ui/widget/app_bar/app_bar.dart';
 import 'package:todo_list/ui/widget/bottom_navigation_bar/bottom_navigation_bar.dart';
 
 class CalendarPage extends StatefulWidget {
@@ -13,7 +12,9 @@ class _CalendarPageState extends State<CalendarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(),
+      appBar: AppBar(
+        title: Text('Posts'),
+      ),
       body: Container(),
       bottomNavigationBar: BottomNavigation(),
     );
