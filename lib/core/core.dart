@@ -1,4 +1,3 @@
-import 'package:auto_injector/auto_injector.dart';
 import 'package:dio/dio.dart';
 import 'package:todo_list/core/config/injector.dart';
 
