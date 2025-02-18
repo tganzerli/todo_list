@@ -75,13 +75,14 @@ ThemeData lightTheme(BuildContext context) {
       showCheckmark: false,
       iconTheme: IconThemeData(color: AppColorsConstant.cardBackground),
       padding: EdgeInsets.all(AppSpacing().spacingXS),
+      side: BorderSide(width: 0, color: AppColorsConstant.scaffoldBackground),
       labelStyle: TextStyle(
-          fontSize: 11,
-          color: AppColorsConstant.cardBackground,
+          fontSize: 14,
+          color: AppColorsConstant.primary,
           fontWeight: FontWeight.w500),
       secondaryLabelStyle: TextStyle(
-          fontSize: 11,
-          color: AppColorsConstant.primary,
+          fontSize: 14,
+          color: AppColorsConstant.cardBackground,
           fontWeight: FontWeight.w500),
     ),
   );
