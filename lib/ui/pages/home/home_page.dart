@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
             return Container();
           }
 
-          if (state is HomeLoading || state is HomeInitial) {
+          if (state.posts.isEmpty) {
             return Container();
           }
 
