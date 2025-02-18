@@ -18,7 +18,6 @@ class BottomNavigation extends StatelessWidget {
       width: size.width,
       height: 80,
       child: Stack(
-        // overflow: Overflow.visible,
         children: [
           CustomPaint(
             size: Size(size.width, 80),
