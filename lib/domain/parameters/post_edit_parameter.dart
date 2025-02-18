@@ -13,7 +13,7 @@ class PostEditParameter extends Parameters {
     required this.id,
     this.title,
     this.body,
-    required this.date,
+    this.date,
     this.status,
   });
 
