@@ -4,15 +4,15 @@ import 'package:todo_list/core/config/injector.dart';
 import 'package:todo_list/domain/entities/posts_entity.dart';
 import 'package:todo_list/domain/enums/posts_status_enum.dart';
 import 'package:todo_list/layout/layout.dart';
+import 'package:todo_list/ui/app_routes.dart';
 import 'package:todo_list/ui/pages/home/viewmodels/my_post_card_viewmodel.dart';
 
 class MyPostCard extends StatelessWidget {
   final PostsEntity post;
-  final void Function()? onSelected;
+
   MyPostCard({
     super.key,
     required this.post,
-    this.onSelected,
   });
 
   final MyPostCardViewModel viewModel = injector.get<MyPostCardViewModel>();
@@ -23,7 +23,8 @@ class MyPostCard extends StatelessWidget {
     final text = Theme.of(context).textTheme;
     return Card(
       child: GestureDetector(
-        onTap: onSelected,
+        onTap: () =>
+            Navigator.pushNamed(context, AppRoutes.infoPost, arguments: post),
         child: Container(
           height: 82,
           color: Colors.transparent,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list/domain/entities/posts_entity.dart';
 import 'package:todo_list/layout/layout.dart';
+import 'package:todo_list/ui/app_routes.dart';
 
 class InProgressPosts extends StatelessWidget {
   final List<PostsEntity> posts;
@@ -64,39 +65,43 @@ class InProgressPosts extends StatelessWidget {
     final text = Theme.of(context).textTheme;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: spacing.spacingXS),
-      child: Card(
-        color: backgroundColor(colors, postIndex),
-        child: Padding(
-          padding: EdgeInsets.all(spacing.marginApp),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: spacing.spacingXS,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                spacing: spacing.spacingSM,
-                children: [
-                  ClipOval(
-                    child: Image.asset(
-                      posts[postIndex].user.image,
-                      width: 42,
-                      height: 42,
-                      fit: BoxFit.cover,
+      child: GestureDetector(
+        onTap: () => Navigator.pushNamed(context, AppRoutes.infoPost,
+            arguments: posts[postIndex]),
+        child: Card(
+          color: backgroundColor(colors, postIndex),
+          child: Padding(
+            padding: EdgeInsets.all(spacing.marginApp),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: spacing.spacingXS,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  spacing: spacing.spacingSM,
+                  children: [
+                    ClipOval(
+                      child: Image.asset(
+                        posts[postIndex].user.image,
+                        width: 42,
+                        height: 42,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                  Text(
-                    posts[postIndex].user.name,
-                    style: text.titleLarge,
-                  )
-                ],
-              ),
-              Text(
-                posts[postIndex].title,
-                style: text.titleMedium,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              )
-            ],
+                    Text(
+                      posts[postIndex].user.name,
+                      style: text.titleLarge,
+                    )
+                  ],
+                ),
+                Text(
+                  posts[postIndex].title,
+                  style: text.titleMedium,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                )
+              ],
+            ),
           ),
         ),
       ),

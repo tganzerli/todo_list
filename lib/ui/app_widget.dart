@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list/core/config/injector.dart';
+import 'package:todo_list/domain/entities/posts_entity.dart';
 import 'package:todo_list/layout/layout.dart';
 import 'package:todo_list/ui/start_viewmodel.dart';
 
 import 'pages/add_post/add_post_page.dart';
 import 'pages/calendar/calendar_page.dart';
 import 'pages/home/home_page.dart';
+import 'pages/info_post/info_post_page.dart';
 import 'pages/splash/splash_page.dart';
 import 'start_config_prod.dart';
 
@@ -33,6 +35,10 @@ class AppWidget extends StatelessWidget {
                 transitionType: 'fade');
           case '/addPost':
             return _customPageRoute(const AddPostPage());
+          case '/infoPost':
+            return _customPageRoute(InfoPostPage(
+              post: args as PostsEntity,
+            ));
           default:
             return _customPageRoute(const SplashPage(), transitionType: 'fade');
         }
