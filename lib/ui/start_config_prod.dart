@@ -32,6 +32,7 @@ class _StartConfigState extends State<StartConfig> {
   @override
   void initState() {
     super.initState();
+    viewModel.cleanCacheEvent.execute();
     viewModel.authEvent.execute();
     viewModel.authEvent.addListener(listener);
   }
