@@ -5,6 +5,9 @@ import 'package:flutter/widgets.dart';
 
 import 'package:todo_list/core/core.dart';
 import 'package:todo_list/domain/enums/posts_status_enum.dart';
+import 'package:todo_list/domain/validator/body_validator.dart';
+import 'package:todo_list/domain/validator/date_validator.dart';
+import 'package:todo_list/domain/validator/title_validator.dart';
 
 class PostAddParameter extends Parameters {
   final String title;
@@ -25,20 +28,11 @@ class PostAddParameter extends Parameters {
     if (userId != null && userId! <= 0) {
       return failure(ValidationException(message: 'Id do usuario invalido'));
     }
-    if (title.isEmpty) {
-      return failure(ValidationException(message: 'Post sem titulo'));
-    }
-    if (title.length > 100) {
-      return failure(ValidationException(message: 'Titulo muito grande'));
-    }
-    if (body.isEmpty) {
-      return failure(ValidationException(message: 'Post sem Texto'));
-    }
-    if (body.length > 500) {
-      return failure(ValidationException(message: 'Texto muito grande'));
-    }
 
-    return success(this);
+    return TitleValidator.validate(title) //
+        .map((_) => BodyValidator.validate(body))
+        .map((_) => DateValidator.validate(date))
+        .map((_) => this);
   }
 
   PostAddParameter copyWith({

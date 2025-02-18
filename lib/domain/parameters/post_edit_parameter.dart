@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:todo_list/core/core.dart';
 import 'package:todo_list/domain/enums/posts_status_enum.dart';
+import 'package:todo_list/domain/validator/body_validator.dart';
+import 'package:todo_list/domain/validator/title_validator.dart';
 
 class PostEditParameter extends Parameters {
   final int id;
@@ -26,20 +28,10 @@ class PostEditParameter extends Parameters {
       return failure(
           ValidationException(message: 'Post sem variavel para ser editada'));
     }
-    if (title != null && title!.isEmpty) {
-      return failure(ValidationException(message: 'Post sem titulo'));
-    }
-    if (title != null && title!.length > 100) {
-      return failure(ValidationException(message: 'Titulo muito grande'));
-    }
-    if (body != null && body!.isEmpty) {
-      return failure(ValidationException(message: 'Post sem Texto'));
-    }
-    if (body != null && body!.length > 500) {
-      return failure(ValidationException(message: 'Texto muito grande'));
-    }
 
-    return success(this);
+    return TitleValidator.validate(title) //
+        .map((_) => BodyValidator.validate(body))
+        .map((_) => this);
   }
 
   Map<String, dynamic> toMap() {
