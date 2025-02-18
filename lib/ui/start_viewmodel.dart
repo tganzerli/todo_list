@@ -36,7 +36,6 @@ class StartViewModel extends ViewModel<UnitViewState> {
   }
 
   AsyncOutput<String> _routeEvent(String route) async {
-    print('route: $route');
     return success(route);
   }
 }
