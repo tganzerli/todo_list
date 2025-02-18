@@ -67,6 +67,7 @@ class _InfoPostPageState extends State<InfoPostPage> {
                 Text(
                   widget.post.title,
                   style: text.displayMedium,
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(height: spacing.spacingXS),
                 Card(
