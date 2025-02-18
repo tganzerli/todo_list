@@ -5,22 +5,39 @@ import 'spacing/spacing.dart';
 
 ThemeData lightTheme(BuildContext context) {
   return ThemeData(
-    primaryColor: AppColorsConstant.primary,
-    scaffoldBackgroundColor: AppColorsConstant.scaffoldBackground,
-    dividerColor: AppColorsConstant.borderColor,
-    appBarTheme: AppBarTheme(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      titleTextStyle: TextStyle(
-        color: AppColorsConstant.textPrimary,
-        fontSize: 20,
-        fontWeight: FontWeight.bold,
+      fontFamily: 'Poppins',
+      primaryColor: AppColorsConstant.primary,
+      scaffoldBackgroundColor: AppColorsConstant.scaffoldBackground,
+      dividerColor: AppColorsConstant.borderColor,
+      appBarTheme: AppBarTheme(
+        backgroundColor: AppColorsConstant.scaffoldBackground,
+        elevation: 0,
+        titleTextStyle: TextStyle(
+          color: AppColorsConstant.textPrimary,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+        iconTheme: IconThemeData(color: AppColorsConstant.textPrimary),
       ),
-      iconTheme: IconThemeData(color: AppColorsConstant.textPrimary),
-    ),
-    extensions: [
-      const AppColors(),
-      const AppSpacing(),
-    ],
-  );
+      textTheme: TextTheme(
+        titleLarge: TextStyle(
+            fontSize: 20,
+            color: AppColorsConstant.textPrimary,
+            fontWeight: FontWeight.w600),
+        titleMedium: TextStyle(
+            fontSize: 14,
+            color: AppColorsConstant.textPrimary,
+            fontWeight: FontWeight.w500),
+      ),
+      extensions: [
+        const AppColors(),
+        const AppSpacing(),
+      ],
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+          shape: CircleBorder(),
+          backgroundColor: AppColorsConstant.primary,
+          hoverColor: AppColorsConstant.borderColor,
+          foregroundColor: AppColorsConstant.borderColor,
+          elevation: 6,
+          iconSize: 42));
 }
