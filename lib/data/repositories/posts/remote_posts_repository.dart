@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:todo_list/core/core.dart';
 import 'package:todo_list/core/output/async_output.dart';
 import 'package:todo_list/data/adapters/posts/posts_adapter.dart';
 import 'package:todo_list/data/datasources/posts/posts_cache.dart';
@@ -70,14 +71,18 @@ class RemotePostsRepository implements PostsRepository {
 
   @override
   AsyncOutput<List<PostsEntity>> getPosts() async {
-    return postsClientHttp //
-        .getPosts() //
-        .flatMap((httpData) => usersClientMock //
-            .getUser() //
-            .flatMap((users) =>
-                PostsAdapter.getPostsData(data: httpData, users: users))) //
-        .flatMap((posts) => postsCache.savePosts(posts)) //
-        .onSuccess((posts) => _streamController.add(posts));
+    return postsCache.getPosts().fold(
+        (error) => postsClientHttp //
+            .getPosts() //
+            .flatMap((httpData) => usersClientMock //
+                .getUser() //
+                .flatMap((users) =>
+                    PostsAdapter.getPostsData(data: httpData, users: users))) //
+            .flatMap((posts) => postsCache.savePosts(posts)) //
+            .onSuccess((posts) => _streamController.add(posts)), (posts) {
+      _streamController.add(posts);
+      return success(posts);
+    });
   }
 
   @override

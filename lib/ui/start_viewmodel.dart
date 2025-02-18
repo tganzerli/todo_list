@@ -3,12 +3,16 @@ import 'package:todo_list/data/repositories/auth/auth_repository.dart';
 import 'package:todo_list/domain/entities/user_logged_entity.dart';
 
 class StartViewModel extends ViewModel<UnitViewState> {
+  final Cache cache;
   final AuthRepository authRepository;
 
+  late final Command0<Unit> cleanCacheEvent;
   late final Command0<Unit> authEvent;
   late final Command1<String, String> routeEvent;
 
-  StartViewModel({required this.authRepository}) : super(UnitViewState()) {
+  StartViewModel({required this.authRepository, required this.cache})
+      : super(UnitViewState()) {
+    cleanCacheEvent = Command0(_cleanCacheEvent);
     authEvent = Command0(_authEvent);
     routeEvent = Command1(_routeEvent);
   }
@@ -16,6 +20,12 @@ class StartViewModel extends ViewModel<UnitViewState> {
   late UserLoggedEntity _userLogged;
 
   UserLoggedEntity get userLogged => _userLogged;
+
+  AsyncOutput<Unit> _cleanCacheEvent() async {
+    await cache.clearAll();
+
+    return success(unit);
+  }
 
   AsyncOutput<Unit> _authEvent() async {
     await Future.delayed(Duration(seconds: 2));
