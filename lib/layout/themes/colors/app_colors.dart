@@ -10,6 +10,7 @@ class AppColors extends ThemeExtension<AppColors> {
   final Color textPrimary;
   final Color textSecondary;
   final Color borderColor;
+  final Color iconColor;
   final Color bluePrimary;
   final Color blueSecondary;
   final Color orangePrimary;
@@ -23,6 +24,7 @@ class AppColors extends ThemeExtension<AppColors> {
     this.textPrimary = AppColorsConstant.textPrimary,
     this.textSecondary = AppColorsConstant.textSecondary,
     this.borderColor = AppColorsConstant.borderColor,
+    this.iconColor = AppColorsConstant.iconColor,
     this.bluePrimary = AppColorsConstant.bluePrimary,
     this.blueSecondary = AppColorsConstant.blueSecondary,
     this.orangePrimary = AppColorsConstant.orangePrimary,
@@ -42,6 +44,7 @@ class AppColors extends ThemeExtension<AppColors> {
     Color? textPrimary,
     Color? textSecondary,
     Color? borderColor,
+    Color? iconColor,
     Color? bluePrimary,
     Color? blueSecondary,
     Color? orangePrimary,
@@ -55,6 +58,7 @@ class AppColors extends ThemeExtension<AppColors> {
       textPrimary: textPrimary ?? this.textPrimary,
       textSecondary: textSecondary ?? this.textSecondary,
       borderColor: borderColor ?? this.borderColor,
+      iconColor: iconColor ?? this.iconColor,
       bluePrimary: bluePrimary ?? this.bluePrimary,
       blueSecondary: blueSecondary ?? this.blueSecondary,
       orangePrimary: orangePrimary ?? this.orangePrimary,
@@ -78,6 +82,7 @@ class AppColors extends ThemeExtension<AppColors> {
       textPrimary: Color.lerp(textPrimary, other.textPrimary, t)!,
       textSecondary: Color.lerp(textSecondary, other.textSecondary, t)!,
       borderColor: Color.lerp(borderColor, other.borderColor, t)!,
+      iconColor: Color.lerp(iconColor, other.iconColor, t)!,
       bluePrimary: Color.lerp(bluePrimary, other.bluePrimary, t)!,
       blueSecondary: Color.lerp(blueSecondary, other.blueSecondary, t)!,
       orangePrimary: Color.lerp(orangePrimary, other.orangePrimary, t)!,
