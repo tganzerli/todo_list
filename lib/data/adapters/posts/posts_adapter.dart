@@ -66,7 +66,8 @@ class PostsAdapter {
 
       PostsStatusEnum statusGenerator(DateTime date) {
         DateTime now = DateTime.now();
-        if (date.isAfter(now)) {
+        final difference = date.difference(now).inDays;
+        if (difference.isNegative) {
           return PostsStatusEnum.complete;
         } else if (now.difference(date).inDays == 0) {
           return PostsStatusEnum.inProgress;
